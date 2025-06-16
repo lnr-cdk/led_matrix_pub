@@ -76,14 +76,21 @@ private:
     {
       std::cout << "Enter command: ";
       std::getline(std::cin, input);
+      if (input == "exit")
+      {
+        RCLCPP_INFO(this->get_logger(), "Exiting on user request.");
+        rclcpp::shutdown(); // triggers exit from spin() and breaks the loop
+        break;
+      }
 
-      if (dictionary_.find(input) != dictionary_.end())
+      else if (dictionary_.find(input) != dictionary_.end())
       {
         auto msg = custom_8x8_led_matrix::msg::Custom8x8LedMatrixMsg();
         msg.rows = dictionary_[input];
         publisher_->publish(msg);
         RCLCPP_INFO(this->get_logger(), "Published pattern for '%s'", input.c_str());
       }
+
       else
       {
         RCLCPP_WARN(this->get_logger(), "Unknown command: '%s'", input.c_str());
