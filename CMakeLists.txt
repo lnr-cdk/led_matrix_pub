@@ -7,9 +7,19 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(custom_8x8_led_matrix REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+add_executable(led_matrix_pub src/led_matrix_pub.cpp)
+ament_target_dependencies(led_matrix_pub rclcpp std_msgs custom_8x8_led_matrix)
+
+install(TARGETS
+	led_matrix_pub
+	DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

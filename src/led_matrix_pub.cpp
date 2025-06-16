@@ -6,7 +6,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-#include "custom_8x8_led_matrix/msg/custom8x8_led_matrix_msg.h"
+#include "custom_8x8_led_matrix/msg/custom8x8_led_matrix_msg.hpp"
 
 using namespace std::chrono_literals;
 
@@ -32,8 +32,8 @@ public:
   }
 
 private:
-  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-  std::unordered_map<std::string, std::vector<uint8_t>> dictionary_;
+  rclcpp::Publisher<custom_8x8_led_matrix::msg::Custom8x8LedMatrixMsg>::SharedPtr publisher_;
+  std::unordered_map<std::string, custom_8x8_led_matrix::msg::Custom8x8LedMatrixMsg> dictionary_;
   std::thread input_loop_thread_;
 
   void init_dictionary()
@@ -84,7 +84,7 @@ private:
       if (dictionary_.find(input) != dictionary_.end())
       {
         auto msg = custom_8x8_led_matrix::msg::Custom8x8LedMatrixMsg();
-        msg.data = dictionary_[input];
+        msg.rows = dictionary_[input];
         publisher_->publish(msg);
         RCLCPP_INFO(this->get_logger(), "Published pattern for '%s'", input.c_str());
       }
