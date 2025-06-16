@@ -33,33 +33,30 @@ public:
 
 private:
   rclcpp::Publisher<custom_8x8_led_matrix::msg::Custom8x8LedMatrixMsg>::SharedPtr publisher_;
-  std::unordered_map<std::string, custom_8x8_led_matrix::msg::Custom8x8LedMatrixMsg> dictionary_;
+  std::unordered_map<std::string, std::vector<uint8_t>> dictionary_;
   std::thread input_loop_thread_;
 
   void init_dictionary()
   {
-    // Example: Add entries for words and corresponding 8x8 patterns (64 bits = 8 bytes)
     dictionary_["smile"] = {
-        0b00111100, //
-        0b01000010, //
-        0b10100101, //
-        0b10000001, //
-        0b10100101, //
-        0b10011001, //
-        0b01000010, //
-        0b00111100  //
-    };
+        0b00111100,
+        0b01000010,
+        0b10100101,
+        0b10000001,
+        0b10100101,
+        0b10011001,
+        0b01000010,
+        0b00111100};
 
     dictionary_["heart"] = {
-        0b00001010, //
-        0b00011111, //
-        0b00111111, //
-        0b00111110, //
-        0b00111110, //
-        0b00011100, //
-        0b00001000, //
-        0b00000000  //
-    };
+        0b00001010,
+        0b00011111,
+        0b00111111,
+        0b00111110,
+        0b00111110,
+        0b00011100,
+        0b00001000,
+        0b00000000};
 
     dictionary_["cross"] = {
         0b10000001,
@@ -70,7 +67,6 @@ private:
         0b00100100,
         0b01000010,
         0b10000001};
-    // Add more entries as needed
   }
 
   void input_loop()
