@@ -33,7 +33,7 @@ public:
 
 private:
   rclcpp::Publisher<custom_8x8_led_matrix::msg::Custom8x8LedMatrixMsg>::SharedPtr publisher_;
-  std::unordered_map<std::string, std::vector<uint8_t>> dictionary_;
+  std::unordered_map<std::string, std::array<uint8_t, 8>> dictionary_;
   std::thread input_loop_thread_;
 
   void init_dictionary()
